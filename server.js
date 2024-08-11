@@ -1,3 +1,4 @@
+require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
@@ -9,12 +10,12 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 
-// MySQL connection setup
+// MySQL connection setup using environment variables
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root", // replace with your MySQL username
-  password: "root", // replace with your MySQL password
-  database: "bannerDB",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 db.connect((err) => {
@@ -115,5 +116,5 @@ const initializeTimer = () => {
 initializeTimer();
 
 app.listen(PORT, () => {
-  console.log("Server running on port 5000");
+  console.log(`Server running on port ${PORT}`);
 });
